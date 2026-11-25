@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Sales.LoadTest</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Sales.Contracts\Sales.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="report.template.html" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

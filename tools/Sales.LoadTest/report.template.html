@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0f14;
+    --panel: #121820;
+    --panel-2: #0f151c;
+    --text: #dbe4f0;
+    --muted: #8b98ab;
+    --line: #222c39;
+    --accent: #4f8cff;
+    --green: #35c28a;
+    --red: #ff5c6c;
+    --amber: #ffb020;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #1a2330; padding: 1px 5px; border-radius: 4px; }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 32px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #0f1620, #0b0f14);
+  }
+
+  h1 { margin: 0; font-size: 20px; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); margin: 4px 0 0; }
+
+  .pill {
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .pill.pass { background: rgba(53,194,138,.14); color: var(--green); border: 1px solid rgba(53,194,138,.4); }
+  .pill.fail { background: rgba(255,92,108,.14); color: var(--red); border: 1px solid rgba(255,92,108,.4); }
+
+  main { max-width: 1280px; margin: 0 auto; padding: 22px 32px 56px; }
+
+  .banner {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    background: var(--panel);
+  }
+  .banner.pass { border-color: rgba(53,194,138,.45); background: linear-gradient(135deg, rgba(53,194,138,.12), rgba(53,194,138,.02)); }
+  .banner.fail { border-color: rgba(255,92,108,.45); background: linear-gradient(135deg, rgba(255,92,108,.12), rgba(255,92,108,.02)); }
+  .banner-title { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+  .banner-sub { color: var(--muted); margin-top: 2px; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-width: 0;
+  }
+  .card .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+  .card .value { font-size: clamp(20px, 1.6vw, 24px); font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
+  .card .hint { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .card.good { border-left: 3px solid var(--green); }
+  .card.bad { border-left: 3px solid var(--red); }
+  @media (min-width: 1000px) { .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .panel h2 { margin: 0 0 4px; font-size: 16px; letter-spacing: -0.01em; }
+  .panel h3 { margin: 20px 0 8px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 1000px) { .grid2 { grid-template-columns: 1.4fr 1fr; } }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-top: 10px;
+    background: var(--panel-2);
+  }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { background: #0c1219; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: rgba(79,140,255,.06); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .03em;
+  }
+  .badge.ok { background: rgba(53,194,138,.16); color: var(--green); }
+  .badge.bad { background: rgba(255,92,108,.16); color: var(--red); }
+
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--accent); font-weight: 600; padding: 6px 0; }
+
+  .charts { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
+  @media (min-width: 1000px) {
+    .charts { grid-template-columns: 1fr 1fr; }
+    .charts .chart:first-child { grid-column: 1 / -1; }
+  }
+  .chart { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px; min-width: 0; }
+  .chart h3 { margin: 0 0 8px; }
+  .chart svg { width: 100%; height: auto; display: block; }
+
+  .failures { margin: 10px 0 0; padding-left: 20px; }
+  .failures li { color: var(--red); margin: 4px 0; }
+  .ok-text { color: var(--green); }
+  .muted { color: var(--muted); }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  @media (max-width: 720px) {
+    header { padding: 18px 18px; flex-direction: column; align-items: flex-start; }
+    main { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SQLite Sales Benchmark</h1>
+    <p class="subtitle">Run <code>{{RUN_ID}}</code> · generado {{GENERATED_AT}}</p>
+  </div>
+  <div class="pill {{STATUS_CLASS}}">{{STATUS_TEXT}}</div>
+</header>
+
+<main>
+  <div class="banner {{STATUS_CLASS}}">
+    <div class="banner-title">{{STATUS_TEXT}}</div>
+    <div class="banner-sub">{{BANNER_SUB}}</div>
+  </div>
+
+  {{SUMMARY_CARDS}}
+  {{CONFIG}}
+  {{VERIFICATION}}
+  {{TIMING}}
+  {{CHARTS}}
+  {{TABLES}}
+  {{FAILURES}}
+
+  <footer>Generado por Sales.LoadTest · {{GENERATED_AT}}</footer>
+</main>
+
+<script id="run-data" type="application/json">{{DATA_JSON}}</script>
+
+</body>
+</html>
